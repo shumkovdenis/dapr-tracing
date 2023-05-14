@@ -1,0 +1,61 @@
+version: 1
+apps:
+  - appID: service-a
+    appDirPath: ./
+    appProtocol: http
+    appPort: 6001
+    daprHTTPPort: 3501
+    daprGRPCPort: 50001
+    env:
+      DAPR_HTTP_PORT: 3501
+      DAPR_GRPC_PORT: 50001
+      PORT: 6001
+      SERVICE_NAME: service-a
+      CALLED_SERVICE: service-b
+      SERVER_MODE: http
+      CLIENT_MODE: grpc
+    command: ["go", "run", "./"]
+  - appID: service-b
+    appDirPath: ./
+    appProtocol: http
+    appPort: 6002
+    daprHTTPPort: 3502
+    daprGRPCPort: 50002
+    env:
+      DAPR_HTTP_PORT: 3502
+      DAPR_GRPC_PORT: 50002
+      PORT: 6002
+      SERVICE_NAME: service-b
+      CALLED_SERVICE: service-c
+      SERVER_MODE: grpc
+      CLIENT_MODE: grpc
+    command: ["go", "run", "./"]
+  - appID: service-c
+    appDirPath: ./
+    appProtocol: http
+    appPort: 6003
+    daprHTTPPort: 3503
+    daprGRPCPort: 50003
+    env:
+      DAPR_HTTP_PORT: 3503
+      DAPR_GRPC_PORT: 50003
+      PORT: 6003
+      SERVICE_NAME: service-c
+      CALLED_SERVICE: service-e
+      SERVER_MODE: grpc
+      CLIENT_MODE: grpc
+    command: ["go", "run", "./"]
+  - appID: service-e
+    appDirPath: ./
+    appProtocol: http
+    appPort: 6004
+    daprHTTPPort: 3504
+    daprGRPCPort: 50004
+    env:
+      DAPR_HTTP_PORT: 3504
+      DAPR_GRPC_PORT: 50004
+      PORT: 6004
+      SERVICE_NAME: service-e
+      DISABLE_CALL: true
+      SERVER_MODE: grpc
+    command: ["go", "run", "./"]
